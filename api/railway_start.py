@@ -92,7 +92,10 @@ if __name__ == "__main__":
     # everything to stdout; the log lines still carry their own level (INFO/WARNING/ERROR).
     sys.stderr = sys.stdout
     # passlib 1.7 imports the stdlib `crypt` module, which warns on Python 3.12; harmless noise.
-    warnings.filterwarnings("ignore", category=DeprecationWarning, module=r"passlib(\..*)?")
+    # Import it once with that warning silenced (later imports reuse the cached module).
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        import passlib.utils  # noqa: F401
     os.chdir("/app")
     sys.path.insert(0, "/app")
     prepare_database()
