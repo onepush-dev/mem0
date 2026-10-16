@@ -1,0 +1,21 @@
+{
+	admin off
+	servers {
+		trusted_proxies static private_ranges 100.64.0.0/10
+	}
+}
+
+:{$PORT:8080} {
+	handle /healthz {
+		respond "ok" 200
+	}
+
+	@api path /auth /auth/* /api-keys /api-keys/* /entities /entities/* /requests /requests/* /memories /memories/* /search /configure /configure/* /generate-instructions /reset /docs /docs/* /redoc /openapi.json
+	handle @api {
+		reverse_proxy {$MEM0_API_UPSTREAM}
+	}
+
+	handle {
+		reverse_proxy {$MEM0_DASHBOARD_UPSTREAM}
+	}
+}

@@ -1,0 +1,11 @@
+# Mem0 API service (mem0-api). Service settings: Root Directory = /api, config file = /api/railway.toml
+[build]
+builder = "DOCKERFILE"
+
+[deploy]
+healthcheckPath = "/docs"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+requiredMountPath = "/app/history"
+drainingSeconds = 30

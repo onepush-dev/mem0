@@ -1,0 +1,9 @@
+# Mem0 dashboard service (mem0-dashboard). Service settings: Root Directory = /dashboard, config file = /dashboard/railway.toml
+[build]
+builder = "DOCKERFILE"
+
+[deploy]
+healthcheckPath = "/api/health"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10

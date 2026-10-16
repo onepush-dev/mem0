@@ -1,0 +1,6 @@
+# Reference only. This repo is a multi-service template; each service has its own config:
+#   mem0-api        Root Directory /api        config /api/railway.toml        (Dockerfile build)
+#   mem0-dashboard  Root Directory /dashboard  config /dashboard/railway.toml  (Dockerfile build)
+#   mem0 (proxy)    image caddy:2.11.7-alpine  start command proxy/start-command.txt, CADDYFILE = proxy/Caddyfile
+#   Postgres        Railway Postgres (postgres-ssl:18, pgvector included)
+# Generate the Railway marketplace template from the live project in the dashboard.
