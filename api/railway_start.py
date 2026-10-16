@@ -12,6 +12,7 @@ import socket
 import subprocess
 import sys
 import time
+import warnings
 
 import psycopg
 from psycopg import sql
@@ -61,7 +62,10 @@ def prepare_database() -> None:
 
 def migrate() -> None:
     log("running alembic upgrade head")
-    subprocess.run([sys.executable, "-m", "alembic", "upgrade", "head"], cwd="/app", check=True)
+    subprocess.run(
+        [sys.executable, "-m", "alembic", "upgrade", "head"],
+        cwd="/app", check=True, stderr=subprocess.STDOUT,
+    )
 
 
 def serve() -> None:
@@ -84,6 +88,11 @@ def serve() -> None:
 
 
 if __name__ == "__main__":
+    # Railway tags every stderr line as an error. Python/uvicorn/alembic log INFO to stderr, so send
+    # everything to stdout; the log lines still carry their own level (INFO/WARNING/ERROR).
+    sys.stderr = sys.stdout
+    # passlib 1.7 imports the stdlib `crypt` module, which warns on Python 3.12; harmless noise.
+    warnings.filterwarnings("ignore", category=DeprecationWarning, module=r"passlib(\..*)?")
     os.chdir("/app")
     sys.path.insert(0, "/app")
     prepare_database()
