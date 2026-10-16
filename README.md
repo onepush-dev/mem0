@@ -1,6 +1,6 @@
 # Mem0 — self-hosted AI memory API + dashboard (v2.2.1, pgvector). Deploy on Railway with one click.
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/TEMPLATE_CODE)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/nsYLdD)
 
 [Mem0](https://mem0.ai) is the open-source memory layer for AI agents: send it conversation turns, it extracts durable facts with an LLM, stores them as embeddings in Postgres/pgvector and returns the relevant ones per `user_id`, `agent_id` or `run_id`. This template runs the **official self-hosted stack from the v2.2.1 release** (FastAPI REST server + Next.js dashboard) on **Railway Postgres (pgvector)**, behind **one public domain**, with **zero deploy-time inputs**. The LLM key is optional and can be added after deploy.
 
@@ -95,6 +95,7 @@ Health (no auth): `GET /healthz` → `ok` (proxy), `GET /docs` → `200` (API), 
 Auth, setup, API keys, the request log and `/docs` work from the first boot. If the key is wrong, you get upstream's `provider_auth_failed`.
 
 ## Notes
+- Template editor (unpublished): https://railway.com/workspace/templates/be3979b2-8ea8-4e94-960c-191a8190a410
 - Live source project: https://railway.com/project/339dfd8e-e6bf-4dd7-9fc2-76f3453d73e8 (template editor URL added after generation).
 - Run **one replica** of `mem0-api`, because memory history is SQLite on its volume. The dashboard is stateless.
 - Settings saved on the dashboard Configuration page are stored in Postgres and **override** env variables. If you entered a key there, change it there.
